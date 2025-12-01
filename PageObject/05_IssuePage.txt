@@ -6,9 +6,16 @@ Documentation	Issue Test scenario. CRUD Operation: Create, Read, Update, Delete
 
 # TODO: Write Precondition and Postcondition, Tags 
 
-Pre Condition	Tips: Project must be created by the user before 
-Post Condition	
-Tags
+Pre Condition
+- Use a new private browsing window for each test case. Depending on the Browser used, may be named as Private, Incognito or InPrivate.
+- Use the test user account from TS-2-SignUp.
+- The user which is used to log-in to GitLab has at least one group and project. Otherwise GitLab will automatically redirect to https://gitlab.com/users/sign_up/groups/new and force their creation.
+- Create a blank Gitlab project if a project suitable for the test scenario does not exist.
+
+Post Condition
+- Close Browser.
+
+Tags CreateIssue, ReadIssue, UpdateIssue, DeleteIssue, TS-7-CreateIssue, TS-8-ReadIssue, TS-9-UpdateIssue, TS-10-DeleteIssue
 
 #******************* Common Variables ********************
 
@@ -17,19 +24,63 @@ Tags
 
 # NOTE: Please Remove your login credential before uploading Assignments
 
-# TODO: Write Issue creation field variables, Updated name of the issue
-
+ProjectUrl = https://gitlab.com/dashboard/projects
+Issue_Title_1 = Testing
+Issue_Title_2 = Testing further
+Issue_Description = This is for testing issue creation functionality.
+Issue_Description_Addition = This is for testing editing functionality.
+Issue_Comment = This is a comment to test comment functionality.
 
 
 #******************** Test Cases *************************
 
-*** Test Case ***
+*** Test Cases ***
 
-# TODO: Write Positive Test Cases and Test Process steps
+Create Issue
+- Navigate to ProjectUrl.
+- Select your test project.
+- On the left side navigate to Issues, or Plan and then Issues if Issues is not a pinned item.
+- Click on the New item button.
+- Input Issue_Title_1 as title.
+- Input Issue_Description as the issue's description.
+- Click on the Create issue button.
+- Verify that the issue appears in the open issues listing.
 
-# Positive Test examples are below write test process steps for each below test case
+Read Issue
+- Open the issue created in the previous test case.
+- Verify that the issue opens and displays Issue_Description as its comment.
 
-	Create issue,
- 	Update name of issue, 
-	Create second issue with privious updated name
-    Delete first issue
+Update Issue
+- Open the issue created in the first test case.
+- Click the Edit button.
+- Change the issue's title to Issue_Title_2.
+- Add Issue_Description_Addition to the issue's description after a newline.
+- Click the Save changes button.
+- Verify that the title and description were updated.
+
+Add Comment
+- Open the issue created in the first test case.
+- Add Issue_Comment to the textbox below Activity.
+- Click on the Comment button.
+- Verify that the comment was added to the issue.
+
+Create Issue #2
+- Ensure you still have the same project open as in the first test case.
+- On the left side navigate to Issues, or Plan and then Issues if Issues is not a pinned item.
+- Click on the New item button.
+- Input Issue_Title_2 as title.
+- Input Issue_Description as the issue's description.
+- Click on the Create issue button.
+- Verify that the issue appears in the open issues listing.
+
+Close Issue
+- Open the issue that was created in the first test case.
+- Click the Close issue button.
+- Verify that the issue was closed.
+
+Delete Issue
+- Open the issue that was created in the fifth test case.
+- Click on the triple dots at the top right corner.
+- Select Delete issue.
+- Confirm deletion.
+- Verify that the issue was deleted and does not show in All issues.

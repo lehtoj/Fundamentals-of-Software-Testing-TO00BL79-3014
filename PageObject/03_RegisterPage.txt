@@ -3,15 +3,17 @@
 
 *** Settings ***
 
-# TODO: Write Documentation e.g. User Registration Test scenario with verification, valid and invalid credentials.
+Documentation
+Testing the sign-up functionality. Sign-up test scenario with valid and invalid inputs.
 
-Documentation	
+Pre Condition
+- Use a new private browsing window for each test case. Depending on the Browser used, may be named as Private, Incognito or InPrivate.
 
-# TODO: Write Precondition, Postcondition, Tags
+Post Condition
+- Only one GitLab test user account is required by further tests. Delete any other extra GitLab user accounts created during this test.
+- Close Browser.
 
-Pre Condition	
-Post Condition	
-Tags
+Tags SignUp, TS-2-SignUp
 
 #******************* Common Variables ********************
 
@@ -19,28 +21,62 @@ Tags
 
 # NOTE: Please Remove your login credential before uploading Assignments
 
-# TODO: Write Registration field variables
-
-LoginUrl = https://gitlab.com/users/sign_up
-
-
+SignUpUrl = https://gitlab.com/users/sign_up
+First_Name = Test
+Last_Name = User
+Username_A = A
+Username_B = B
+Email_A = a@domain.org
+Email_B = b@domain.org
+Valid_Password: This1Is2Very3Secure!
+Invalid_Password = password
 
 #******************** Test Cases *************************
 
-*** Test Case ***
+*** Test Cases ***
 
-# TODO: Write Positive and Negative Test Cases and Test Process steps (Think about possible test cases)
+# Positive Tests
 
-# Positive Test examples are below write test process steps for each below test case
+Sign Up With All Valid Variables
+- Navigate to SignUpUrl.
+- Input first and last name.
+- Input username A. The page should display "Username is available" in green text.
+- Input email A.
+- Input valid password. The page should display the three conditions for a valid password in green text.
+- Click the Continue button on the page.
+- Input the verification code that was sent to the valid email address.
+- Click the verify email address button.
+- The Welcome page asks for further input, but those are not relevant to this test case.
 
-	Register user with valid username and password 
-	- Remember credentials which you are going to use for whole application testing 
+# Negative Tests
 
-# Negative Test examples keywords are below write test process steps for each below test case 
+Sign Up With Invalid Username
+- Navigate to SignUpUrl.
+- Input first and last name.
+- Input username A. The page should display "Username is already taken" in red text.
+- Input email B.
+- Input valid password. The page should display the three conditions for a valid password in green text.
+- Click the Continue button on the page.
+- Verify that the page displays following message at the top: 
+1 error prohibited this user from being saved:
+Username has already been taken
 
-	Register user with same above username,
-		...empty password,
-		...invalid email,
-		...Without recaptcha,
+Sign Up With Invalid Email
+- Navigate to SignUpUrl.
+- Input first and last name.
+- Input username B. The page should display "Username is available" in green text.
+- Input email A.
+- Input valid password. The page should display the three conditions for a valid password in green text.
+- Click the Continue button on the page.
+- Verify that the page displays following message at the top: 
+1 error prohibited this user from being saved:
+Email has already been taken
 
-
+Sign Up With Invalid Password
+- Navigate to SignUpUrl.
+- Input first and last name.
+- Input username B. The page should display "Username is available" in green text.
+- Input email B.
+- Input invalid password. The page should display two of the three conditions for a valid password in green text.
+- Click the Continue button on the page.
+- Verify that the page moves cursor to the password field, highlights the field and displays one of the three conditions for a valid password as red.

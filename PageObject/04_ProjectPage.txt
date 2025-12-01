@@ -9,9 +9,16 @@ Documentation
 
 # TODO: Write Precondition, Postcondition, Tags
 
-Pre Condition	 
-Post Condition	
-Tags
+Pre Condition
+- Use a new private browsing window for each test case. Depending on the Browser used, may be named as Private, Incognito or InPrivate.
+- Use the test user account from TS-2-SignUp.
+- The user which is used to log-in to GitLab has at least one group and project. Otherwise GitLab will automatically redirect to https://gitlab.com/users/sign_up/groups/new and force their creation.
+
+Post Condition
+- Delete projects that were created during this test scenario.
+- Close Browser.
+
+Tags CreateProject, ReadProject, UpdateProject, DeleteProject, TS-3-CreateProject, TS-4-ReadProject, TS-5-UpdateProject, TS-6-DeleteProject
 
 #******************* Common Variables ********************
 
@@ -19,26 +26,90 @@ Tags
 
 # NOTE: Please Remove your login credential before uploading Assignments
 
-# TODO: Write Project creation field variables
-
+ProjectUrl = https://gitlab.com/dashboard/projects
+Project_Name = test
+Project_Name_2 = test2
 
 
 #******************** Test Cases *************************
 
-*** Test Case ***
+*** Test Cases ***
 
-# TODO: Write Positive and Negative Test Cases and Test Process steps
+Create blank project
+- Navigate to ProjectUrl.
+- Click on the New project button.
+- Select blank project.
+- Input Project_Name as project name.
+- Select any group in project URL.
+- Click on the Create project button.
+- Verify that you are redirected to your project and that there is a message "Project 'Project_Name' was successfully created." at top of the page.
 
-# Positive Test examples are below write test process steps for each below test case
+Read blank project
+- Upon creation of the new blank project Project_Name you are automatically redirected to it.
+- Verify you are able to view the README.md file that was automatically generated during project creation.
 
-	Create blank project
-	Create template project 
-	Update name of template project
-	Delete template project
-	Valide that message is showing Project 'First project ' was successfully created.
+Update blank project
+- Navigate to ProjectUrl.
+- Select the Project_Name project.
+- One the left side navigate to Settings and General.
+- Change Project name to Project_Name_2.
+- Ckick on the Save changes button.
+- Verify that there is a message "Project 'Project_Name_2' was successfully updated." at top of the page.
+- Navigate to ProjectUrl and verify the project name has been updated.
 
-# Negative Test examples are below write test process steps for each below test case
+Delete blank project
+- Navigate to ProjectUrl.
+- On the far right click on the triple dots on the same row as Project_Name_2.
+- From the context menu select Delete.
+- Follow instructions and confirm deletion.
+- Verify that the project is no longer listed at ProjectUrl.
 
-	Create a blank project with the previous same name
+Create template project
+- Navigate to ProjectUrl.
+- Click on the New project button.
+- Select Create from template.
+- Select Sample GitLab Project.
+- Input Project_Name as project name.
+- Select any group in project URL.
+- Click on the Create project button.
+- Verify that you are seeing "Import in progress" message at top of the page.
+- Verify that you are after a moment redirected to your project and that there is a message "Project was successfully imported." at top of the page.
 
+Read template project
+- Upon creation of the new template project Project_Name you are automatically redirected to it.
+- On the left side navigate to Plan and Issues.
+- Verify that you can see numerous Issues.
+- On the left side navigate to Code and Merge requests.
+- Verify that you can see numerous Merge requests.
+- On the left side navigate to Code and Branches.
+- Verify that you can see numerous Branches.
+- On the left side navigate to Code and Commits.
+- Verify that you can see at least one Commit.
 
+Update template project
+- Navigate to ProjectUrl.
+- Select the Project_Name project from under Member category.
+- One the left side navigate to Settings and General.
+- Change Project name to Project_Name_2.
+- Ckick on the Save changes button.
+- Verify that there is a message "Project 'Project_Name_2' was successfully updated." at top of the page.
+- Navigate to ProjectUrl and verify the project name has been updated. The project is listed under Member category.
+
+Create blank project with project name that is in use
+- Navigate to ProjectUrl.
+- Click on the New project button.
+- Select blank project.
+- Input Project_Name_2 as project name.
+- Select same group as in Create template project.
+- Click on the Create project button.
+- Verify that you receive a following message at top of the page:
+The form contains the following errors:
+* Project namespace name has already been taken
+* Name has already been taken
+
+Delete template project
+- Navigate to ProjectUrl.
+- On the far right click on the triple dots on the same row as Project_Name_2.
+- From the context menu select Delete.
+- Follow instructions and confirm deletion.
+- Verify that the project is no longer listed at ProjectUrl under the Member category.
